@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 控制台 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%boldYellow(%thread)] %highlight(%-5level) %boldGreen(%logger)-[%L]-%m%n
+            </pattern>
+            <!--<pattern>[%thread] %highlight(%-5level) %cyan(%logger{15}) - %msg %n</pattern>-->
+            <!-- <charset>utf8</charset>-->
+        </encoder>
+    </appender>
+
+    <appender name="FILE-WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日志文件名称 -->
+        <File>logs/warn.log</File>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>warn</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--按照时间进行归档-->
+            <fileNamePattern>logs/warn-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+            <!-- 保存最近90天的日志 -->
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <!-- 输出格式 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger-[%L]-%m%n</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="FILE-DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日志文件名称 -->
+        <File>logs/debug.log</File>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>debug</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/debug-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger-[%L]-%m%n</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="FILE-INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日志文件名称 -->
+        <File>logs/info.log</File>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>info</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/info-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+            <!-- 保存最近90天的日志 -->
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <!-- 输出格式 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger-[%L]-%m%n</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="FILE-ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 日志文件名称 -->
+        <File>logs/error.log</File>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>error</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/error-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+            <!-- 保存最近90天的日志 -->
+            <maxHistory>90</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <!-- 输出格式 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger-[%L]-%m%n</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <logger name="RocketmqClient" level="ERROR"/>
+
+    <logger name="com.xxl.job.core.thread.ExecutorRegistryThread" level="ERROR"/>
+
+    <logger name="org.apache.http" level="ERROR"></logger>
+
+    <logger name="org.springframework.scheduling.support.TaskUtils$LoggingErrorHandler" level="OFF"></logger>
+
+    <logger name="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" level="DEBUG" />
+
+    <logger name="com.tzg.financecheck.dao.mapper" level="DEBUG" additivity="false">
+        <appender-ref ref="FILE-DEBUG"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE-INFO"/>
+        <appender-ref ref="FILE-WARN"/>
+        <appender-ref ref="FILE-ERROR"/>
+    </root>
+</configuration>
